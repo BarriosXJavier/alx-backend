@@ -9,3 +9,24 @@ client.on('connect', () => {
 client.on('error', (error) => {
     console.log(`Redis client not connected to the server: ${error.message}`);
 });
+
+function setNewSchool(shoolName, value) {
+    client.set(shoolName, value, client.print);
+}
+
+function displaySchoolValue(schoolName) {
+    client.get(schoolName, (error, reply) => {
+        if (error) {
+            console.log(error);
+        }
+        else {
+            console.log(schoolName, reply);
+        }
+    })
+}
+
+displaySchoolValue('Holberton');
+setNewSchool('HolbertonSanFrancisco', '100');
+displaySchoolValue('HolbertonSanFrancisco');
+
+client.quit()
